@@ -1,0 +1,17 @@
+var ansi = require('ansi');
+var colors = require('colors');
+
+var cursor = ansi(process.stdout);
+
+var date,
+    hour,
+    minute,
+    second;
+
+function displayTime() {
+    date = new Date();
+    hour = date.getHours();
+    minute = date.getMinutes();
+    second = date.getSeconds();
+    
+}
