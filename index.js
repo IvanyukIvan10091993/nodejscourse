@@ -33,12 +33,12 @@ function displayTime() {
 }
 // A function to log patriotism
 function logPatriotism() {
-    console.log(colors.white('Русские') + colors.grey(' и ') + colors.yellow('украинцы') + colors.grey(' - братья навек!'));
-    console.log(colors.white('Русские') + colors.grey(' и ') + colors.yellow('украинцы') + colors.grey(' - братья навек!'));
-    console.log(colors.blue('Русские') + colors.grey(' и ') + colors.yellow('украинцы') + colors.grey(' - братья навек!'));
+    console.log(colors.white('Русские') + colors.grey(' и ') + colors.blue('украинцы') + colors.grey(' - братья навек!'));
+    console.log(colors.white('Русские') + colors.grey(' и ') + colors.blue('украинцы') + colors.grey(' - братья навек!'));
     console.log(colors.blue('Русские') + colors.grey(' и ') + colors.blue('украинцы') + colors.grey(' - братья навек!'));
-    console.log(colors.red('Русские') + colors.grey(' и ') + colors.blue('украинцы') + colors.grey(' - братья навек!'));
-    console.log(colors.red('Русские') + colors.grey(' и ') + colors.blue('украинцы') + colors.grey(' - братья навек!'));
+    console.log(colors.blue('Русские') + colors.grey(' и ') + colors.yellow('украинцы') + colors.grey(' - братья навек!'));
+    console.log(colors.red('Русские') + colors.grey(' и ') + colors.yellow('украинцы') + colors.grey(' - братья навек!'));
+    console.log(colors.red('Русские') + colors.grey(' и ') + colors.yellow('украинцы') + colors.grey(' - братья навек!'));
 }
 // A function to repeat a function at a given interval
 function repeater (functionToRepeat, interval) {
