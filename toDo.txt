@@ -1,0 +1,6 @@
+get random suits when get cards
+give colors to cards
+implement player object constructors
+give ai dealer probability logic
+implement win/lose congratulations
+implement logs
