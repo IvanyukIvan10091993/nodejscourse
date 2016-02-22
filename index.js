@@ -2,35 +2,8 @@
 
 // Variables
 
-// Simple functions (do not depend on other functions and global variables)
-// Generates deck
-function generateDeck() {
-  return {
-    cards: {
-      0: {name: 'two', quantity:4, value:2},
-      1: {name: 'three', quantity:4, value:3},
-      2: {name: 'four', quantity:4, value:4},
-      3: {name: 'five', quantity:4, value:5},
-      4: {name: 'six', quantity:4, value:6},
-      5: {name: 'seven', quantity:4, value:7},
-      6: {name: 'eight', quantity:4, value:8},
-      7: {name: 'nine', quantity:4, value:9},
-      8: {name: 'ten', quantity:4, value:10},
-      9: {name: 'jack', quantity:4, value:10},
-      10: {name: 'queen', quantity:4, value:10},
-      11: {name: 'king', quantity:4, value:10},
-      12: {name: 'ace', quantity:4, value:11},
-    },
-    cardTypesLeft:13,
-    cardsLeft:52
-  };
-}
-// Gets random number from interval
-function getRandomNumber(min, max) {
-  return (Math.random() * (max - min)) + min;
-}
+// Functions
 
-// Complex functions (depend on other functions and global variables)
 // Chooses card using probability. Returns card type index.
 function chooseCard(deck) {
   var randomNumber = getRandomNumber(0, deck.cardsLeft),
@@ -47,17 +20,66 @@ function chooseCard(deck) {
     }
   }
 }
+// Generates cards
+function generateCards() {
+  return {
+      0: generateCardType('two', 2),
+      1: generateCardType('three', 3),
+      2: generateCardType('four', 4),
+      3: generateCardType('five', 5),
+      4: generateCardType('six', 6),
+      5: generateCardType('seven', 7),
+      6: generateCardType('eight', 8),
+      7: generateCardType('nine', 9),
+      8: generateCardType('ten', 10),
+      9: generateCardType('jack', 10),
+      10: generateCardType('queen', 10),
+      11: generateCardType('king', 10),
+      12: generateCardType('ace', 11)
+    };
+}
+// Generates card type
+function generateCardType(cardName, cardValue) {
+  return {
+    name: cardName,
+    quantity: 4,
+    value: cardValue,
+    suits: generateSuits()
+  };
+}
+// Generates deck
+function generateDeck() {
+  return {
+    cards: generateCards(),
+    cardTypesLeft:13,
+    cardsLeft:52
+  };
+}
+// Generates suits
+function generateSuits() {
+  return {
+    0:{color:'red', name: 'hearts'},
+    1:{color:'red', name: 'diamonds'},
+    2:{color:'black', name: 'spades'},
+    3:{color:'black', name: 'clubs'},
+    suitsLeft:4
+  };
+}
 // Gets card
 function getCard(deck) {
   var cardType = chooseCard(deck);
   console.log(deck.cards[cardType].name);
   removeCard(cardType, deck);
 }
+// Gets random number from interval
+function getRandomNumber(min, max) {
+  return (Math.random() * (max - min)) + min;
+}
 // Removes card from the deck
 function removeCard(cardType, deck) {
   deck.cards[cardType].quantity -= 1;
   deck.cardsLeft -= 1;
-  if (deck.cards[cardType].quantity < 1) {
+  if (deck.cards[cardType].quantity < 1) { // If no cards of this type left
     removeCardType(cardType, deck);
   }
 }
