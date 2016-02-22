@@ -68,12 +68,16 @@ function generateSuits() {
 // Gets card
 function getCard(deck) {
   var cardType = chooseCard(deck);
-  console.log(deck.cards[cardType].name);
+  logCard(deck, cardType);
   removeCard(cardType, deck);
 }
 // Gets random number from interval
 function getRandomNumber(min, max) {
   return (Math.random() * (max - min)) + min;
+}
+// Logs card
+function logCard(deck, cardType) {
+  console.log(deck.cards[cardType].name);;
 }
 // Removes card from the deck
 function removeCard(cardType, deck) {
