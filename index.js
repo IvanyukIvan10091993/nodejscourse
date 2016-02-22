@@ -75,7 +75,7 @@ function getCard(deck) {
   var cardType = chooseCard(deck).cardIndex,
       suitType = chooseCard(deck).suitIndex;
   logCard(deck, cardType, suitType);
-  removeCard(cardType, deck);
+  removeCard(cardType, deck, suitType);
 }
 // Gets random number from interval (doesn't include right border)
 function getRandomNumber(min, max) {
@@ -83,14 +83,17 @@ function getRandomNumber(min, max) {
 }
 // Logs card
 function logCard(deck, cardType, suitType) {
-  console.log(deck.cards[cardType].name + deck.cards[cardType].suits[suitType].name);
+  console.log(deck.cards[cardType].name);
+  console.log(deck.cards[cardType].suits[suitType].name);
 }
 // Removes card from the deck
-function removeCard(cardType, deck) {
+function removeCard(cardType, deck, suitType) {
   deck.cards[cardType].quantity -= 1;
   deck.cardsLeft -= 1;
   if (deck.cards[cardType].quantity < 1) { // If no cards of this type left
     removeCardType(cardType, deck);
+  } else { // If card type not removed, suit should be deleted
+    removeSuit(deck.cards[cardType].suits, suitType);
   }
 }
 // Removes card type from the deck
@@ -102,6 +105,13 @@ function removeCardType(cardType, deck) {
   } else {
     delete deck.cards[cardType];
   }
+}
+// Removes suit
+function removeSuit(suitsObject, suitType) {
+  // no need to check if (suitsLeft > 1) or not because code won't get there otherwise
+  suitsObject[suitType] = suitsObject[suitsObject.suitsLeft - 1];
+  delete suitsObject[suitsObject.suitsLeft - 1];
+  suitsObject.suitsLeft -= 1;
 }
 
 //Code
