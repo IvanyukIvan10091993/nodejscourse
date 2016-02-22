@@ -73,8 +73,8 @@ function generateSuits() {
 }
 // Gets card
 function getCard(deck) {
-  var cardType = chooseCard(deck).cardIndex, /
-      suitType = chooseCard(deck).suitIndex; /
+  var cardType = chooseCard(deck).cardIndex, // Bug
+      suitType = chooseCard(deck).suitIndex; // Bug
   logCard(deck, cardType, suitType);
   removeCard(cardType, deck, suitType);
 }
