@@ -1,6 +1,7 @@
 // Libraries
 
 // Variables
+var deck;
 
 // Functions
 
@@ -104,7 +105,7 @@ function removeCardType(cardType, deck) {
 }
 
 //Code
-var deck = generateDeck();
+deck = generateDeck();
 for (var i = 0; i < 52; i++) {
   console.log((i+1));
   getCard(deck);
