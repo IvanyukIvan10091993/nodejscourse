@@ -1,7 +1,7 @@
 // Libraries
 
 // Variables
-var deck;
+var deckk;
 
 // Functions
 
@@ -23,7 +23,8 @@ function chooseCard(deck) {
 }
 // Chooses suit for a card. Returns suit index
 function chooseSuit(objectSuits) {
-  return Math.floor(getRandomNumber(0, objectSuits.suitsLeft));
+  console.log(objectSuits.suitsLeft);
+  return Math.floor(getRandomNumber(0, (objectSuits.suitsLeft - 1)));
 }
 // Generates cards
 function generateCards() {
@@ -72,8 +73,8 @@ function generateSuits() {
 }
 // Gets card
 function getCard(deck) {
-  var cardType = chooseCard(deck).cardIndex,
-      suitType = chooseCard(deck).suitIndex;
+  var cardType = chooseCard(deck).cardIndex, /
+      suitType = chooseCard(deck).suitIndex; /
   logCard(deck, cardType, suitType);
   removeCard(cardType, deck, suitType);
 }
@@ -83,7 +84,7 @@ function getRandomNumber(min, max) {
 }
 // Logs card
 function logCard(deck, cardType, suitType) {
-  console.log(deck.cards[cardType].name + " \nSuit index: " + suitType);
+  console.log(deck.cards[cardType].name + " " + suitType);
   console.log(deck.cards[cardType].suits);
   console.log(deck.cards[cardType].suits[suitType].name)
 }
@@ -116,8 +117,8 @@ function removeSuit(suitsObject, suitType) {
 }
 
 //Code
-deck = generateDeck();
+deckk = generateDeck();
 for (var i = 0; i < 52; i++) {
   console.log("\nCard number: " + (i+1));
-  getCard(deck);
+  getCard(deckk);
 }
