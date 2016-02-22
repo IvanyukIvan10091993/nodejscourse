@@ -16,9 +16,13 @@ function chooseCard(deck) {
   {
     intervalRightBorder += cards[cardType].quantity;
     if (randomNumber < intervalRightBorder) {
-      return cardType;
+      return {cardIndex: cardType, suitIndex: chooseSuit(cards[cardType].suits)};
     }
   }
+}
+// Chooses suit for a card. Returns suit index
+function chooseSuit(objectSuits) {
+  return Math.floor(getRandomNumber(0, objectSuits.suitsLeft));
 }
 // Generates cards
 function generateCards() {
@@ -67,17 +71,18 @@ function generateSuits() {
 }
 // Gets card
 function getCard(deck) {
-  var cardType = chooseCard(deck);
-  logCard(deck, cardType);
+  var cardType = chooseCard(deck).cardIndex,
+      suitType = chooseCard(deck).suitIndex;
+  logCard(deck, cardType, suitType);
   removeCard(cardType, deck);
 }
-// Gets random number from interval
+// Gets random number from interval (doesn't include right border)
 function getRandomNumber(min, max) {
   return (Math.random() * (max - min)) + min;
 }
 // Logs card
-function logCard(deck, cardType) {
-  console.log(deck.cards[cardType].name);;
+function logCard(deck, cardType, suitType) {
+  console.log(deck.cards[cardType].name + deck.cards[cardType].suits[suitType].name);
 }
 // Removes card from the deck
 function removeCard(cardType, deck) {
