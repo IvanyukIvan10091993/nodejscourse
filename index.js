@@ -14,11 +14,16 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
 function chooseCard(deck) {
   return getRandomInteger(0, deck.length);
 }
+// A function to clear log
+function clearLog() {
+  return process.stdout.write('\033c');
+}
 // Creates player
-function createPlayer(isHumanBoolean) {
+function createPlayer(isComputerBoolean, nameString) {
   var player = {};
-  player.sum = 0;
-  if (!(isHumanBoolean)) {
+  player.nameString = nameString;
+  player.sumNumber = 0;
+  if (isComputerBoolean) {
     player.isComputerBoolean = true;
     player.cardValueSumExpectationNumber = cardValueSumInteger;
   }
