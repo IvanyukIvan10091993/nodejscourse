@@ -72,8 +72,9 @@ function generateSuits() {
 }
 // Gets card
 function getCard(deck) {
-  var cardType = chooseCard(deck).cardIndex, // Bug
-      suitType = chooseCard(deck).suitIndex; // Bug
+  var chosenCard = chooseCard(deck),
+      cardType = chosenCard.cardIndex,
+      suitType = chosenCard.suitIndex;
   logCard(deck, cardType, suitType);
   removeCard(cardType, deck, suitType);
 }
@@ -119,5 +120,5 @@ function removeSuit(suitsObject, suitType) {
 deck = generateDeck();
 for (var i = 0; i < 52; i++) {
   console.log("\nCard number: " + (i+1));
-  getCard(deckk);
+  getCard(deck);
 }
