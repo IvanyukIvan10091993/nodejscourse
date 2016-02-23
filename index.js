@@ -1,4 +1,5 @@
 // Libraries
+var colors = require('colors/safe');
 
 // Variables
 var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
@@ -7,6 +8,10 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
     cardValueIntegerArray = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
 
 // Functions
+// Chooses random card index from the deck
+function chooseCard(deck) {
+  return getRandomInteger(0, deck.length);
+}
 // Generates one card
 function generateCard(cardColorString,
                       cardSuitNameString,
@@ -19,7 +24,7 @@ function generateCard(cardColorString,
     cardValueInteger: cardValueInteger
   };
 }
-// Generates cards
+// Generates deck
 function generateDeck(cardColorStringArray,
                       cardSuitNameStringArray,
                       cardTypeNameStringArray,
@@ -46,6 +51,18 @@ function generateDeck(cardColorStringArray,
   deck.length = cardNumber;
   return deck;
 }
+// Gets random number from interval (doesn't include right border)
+function getRandomInteger(min, max) {
+  return Math.floor((Math.random() * (max - min))) + min;
+}
+// Logs card
+function logCard(cardIndex, deck) {
+  console.log(colors[deck[cardIndex].cardColorString](deck[cardIndex].cardNameString));
+}
 
 // Code
-console.log(generateDeck(cardColorStringArray, cardSuitNameStringArray, cardTypeNameStringArray, cardValueIntegerArray));
+var deck = generateDeck(cardColorStringArray,
+                        cardSuitNameStringArray,
+                        cardTypeNameStringArray,
+                        cardValueIntegerArray);
+logCard(chooseCard(deck), deck);
