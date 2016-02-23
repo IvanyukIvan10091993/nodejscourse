@@ -1,7 +1,7 @@
 // Libraries
 
 // Variables
-var deckk;
+var deck;
 
 // Functions
 
@@ -117,7 +117,7 @@ function removeSuit(suitsObject, suitType) {
 }
 
 //Code
-deckk = generateDeck();
+deck = generateDeck();
 for (var i = 0; i < 52; i++) {
   console.log("\nCard number: " + (i+1));
   getCard(deckk);
