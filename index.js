@@ -59,10 +59,21 @@ function getRandomInteger(min, max) {
 function logCard(cardIndex, deck) {
   console.log(colors[deck[cardIndex].cardColorString](deck[cardIndex].cardNameString));
 }
+// Removes card from the deck
+function removeCard(cardIndex, deck) {
+  deck.length -= 1;
+  deck[cardIndex] = deck[deck.length];
+  delete deck[deck.length];
+}
 
 // Code
 var deck = generateDeck(cardColorStringArray,
                         cardSuitNameStringArray,
                         cardTypeNameStringArray,
                         cardValueIntegerArray);
-logCard(chooseCard(deck), deck);
+for (var i = 0; i < 52; i++) {
+  console.log('\nCard number' + (i + 1))
+  cardIndex = chooseCard(deck);
+  logCard(cardIndex, deck);
+  removeCard(cardIndex, deck);
+}
