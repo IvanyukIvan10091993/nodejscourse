@@ -1,4 +1,5 @@
 // Libraries
+var colors = require('colors/safe');
 
 // Variables
 var deck;
@@ -17,7 +18,10 @@ function chooseCard(deck) {
   {
     intervalRightBorder += cards[cardType].quantity;
     if (randomNumber < intervalRightBorder) {
-      return {cardIndex: cardType, suitIndex: chooseSuit(cards[cardType].suits)};
+      return {
+        cardIndex: cardType,
+        suitsIndex: chooseSuit(cards[cardType].suits)
+      };
     }
   }
 }
@@ -28,19 +32,19 @@ function chooseSuit(objectSuits) {
 // Generates cards
 function generateCards() {
   return {
-      0: generateCardType('two', 2),
-      1: generateCardType('three', 3),
-      2: generateCardType('four', 4),
-      3: generateCardType('five', 5),
-      4: generateCardType('six', 6),
-      5: generateCardType('seven', 7),
-      6: generateCardType('eight', 8),
-      7: generateCardType('nine', 9),
-      8: generateCardType('ten', 10),
-      9: generateCardType('jack', 10),
-      10: generateCardType('queen', 10),
-      11: generateCardType('king', 10),
-      12: generateCardType('ace', 11)
+      0: generateCardType('Two', 2),
+      1: generateCardType('Three', 3),
+      2: generateCardType('Four', 4),
+      3: generateCardType('Five', 5),
+      4: generateCardType('Six', 6),
+      5: generateCardType('Seven', 7),
+      6: generateCardType('Eight', 8),
+      7: generateCardType('Nine', 9),
+      8: generateCardType('Ten', 10),
+      9: generateCardType('Jack', 10),
+      10: generateCardType('Queen', 10),
+      11: generateCardType('King', 10),
+      12: generateCardType('Ace', 11)
     };
 }
 // Generates card type
@@ -63,10 +67,10 @@ function generateDeck() {
 // Generates suits
 function generateSuits() {
   return {
-    0:{color:'red', name: 'hearts'},
-    1:{color:'red', name: 'diamonds'},
-    2:{color:'black', name: 'spades'},
-    3:{color:'black', name: 'clubs'},
+    0:{color:'red', name: 'Hearts'},
+    1:{color:'red', name: 'Diamonds'},
+    2:{color:'blue', name: 'Spades'},
+    3:{color:'blue', name: 'Clubs'},
     suitsLeft:4
   };
 }
@@ -74,8 +78,9 @@ function generateSuits() {
 function getCard(deck) {
   var chosenCard = chooseCard(deck),
       cardType = chosenCard.cardIndex,
-      suitType = chosenCard.suitIndex;
-  logCard(deck, cardType, suitType);
+      suitType = chosenCard.suitsIndex,
+      suitColor = deck.cards[cardType].suits[suitType].color;
+  logCard(deck, cardType, suitType, suitColor);
   removeCard(cardType, deck, suitType);
 }
 // Gets random number from interval (doesn't include right border)
@@ -83,8 +88,8 @@ function getRandomNumber(min, max) {
   return (Math.random() * (max - min)) + min;
 }
 // Logs card
-function logCard(deck, cardType, suitType) {
-  console.log(deck.cards[cardType].name + " of " + deck.cards[cardType].suits[suitType].name);
+function logCard(deck, cardType, suitType, suitColor) {
+  console.log(colors[suitColor](deck.cards[cardType].name + " of " + deck.cards[cardType].suits[suitType].name));
 }
 // Removes card from the deck
 function removeCard(cardType, deck, suitType) {
