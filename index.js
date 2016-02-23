@@ -23,8 +23,7 @@ function chooseCard(deck) {
 }
 // Chooses suit for a card. Returns suit index
 function chooseSuit(objectSuits) {
-  console.log(objectSuits.suitsLeft);
-  return Math.floor(getRandomNumber(0, (objectSuits.suitsLeft - 1)));
+  return Math.floor(getRandomNumber(0, (objectSuits.suitsLeft)));
 }
 // Generates cards
 function generateCards() {
