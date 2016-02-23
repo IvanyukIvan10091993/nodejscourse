@@ -21,8 +21,10 @@ function clearLog() {
 // Creates player
 function createPlayer(isComputerBoolean, nameString) {
   var player = {};
+  player.cardsQuantityInteger = 0;
   player.nameString = nameString;
   player.sumNumber = 0;
+  player.tookCardBoolean = false;
   if (isComputerBoolean) {
     player.isComputerBoolean = true;
     player.cardValueSumExpectationNumber = cardValueSumInteger;
@@ -75,6 +77,10 @@ function getRandomInteger(min, max) {
 // Logs card
 function logCard(cardIndex, deck) {
   console.log(colors[deck[cardIndex].cardColorString](deck[cardIndex].cardNameString));
+}
+// Passes turn
+function passTurn(playerObjectArray) {
+  ;
 }
 // Removes card from the deck
 function removeCard(cardIndex, deck) {
