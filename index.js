@@ -84,9 +84,7 @@ function getRandomNumber(min, max) {
 }
 // Logs card
 function logCard(deck, cardType, suitType) {
-  console.log(deck.cards[cardType].name + " " + suitType);
-  console.log(deck.cards[cardType].suits);
-  console.log(deck.cards[cardType].suits[suitType].name)
+  console.log(deck.cards[cardType].name + " of " + deck.cards[cardType].suits[suitType].name);
 }
 // Removes card from the deck
 function removeCard(cardType, deck, suitType) {
