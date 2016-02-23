@@ -5,12 +5,24 @@ var colors = require('colors/safe');
 var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
     cardSuitNameStringArray = ['Hearts', 'Diamonds', 'Spades', 'Clubs'],
     cardTypeNameStringArray = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace'],
-    cardValueIntegerArray = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
+    cardValueSumInteger = 380,
+    cardValueIntegerArray = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11],
+    deck;
 
 // Functions
 // Chooses random card index from the deck
 function chooseCard(deck) {
   return getRandomInteger(0, deck.length);
+}
+// Creates player
+function createPlayer(isHumanBoolean) {
+  var player = {};
+  player.sum = 0;
+  if (!(isHumanBoolean)) {
+    player.isComputerBoolean = true;
+    player.cardValueSumExpectationNumber = cardValueSumInteger;
+  }
+  return player;
 }
 // Generates one card
 function generateCard(cardColorString,
@@ -67,7 +79,7 @@ function removeCard(cardIndex, deck) {
 }
 
 // Code
-var deck = generateDeck(cardColorStringArray,
+deck = generateDeck(cardColorStringArray,
                         cardSuitNameStringArray,
                         cardTypeNameStringArray,
                         cardValueIntegerArray);
