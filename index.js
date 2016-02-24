@@ -34,7 +34,7 @@ function checkOpinion(playerObject) {
 // Checks if computer should take a card
 function checkOpinionComputer(playerObject) {
   var cardValueExpectationNumber = player.cardNotInHandValueSumInteger / playerObject.cardsNotInHandQuantityInteger;
-  if (playerObject.sumNumber + cardValueExpectationNumber > maxSumInteger) {
+  if (playerObject.sumNumber + cardValueExpectationNumber < maxSumInteger) {
     return true;
   }
 }
