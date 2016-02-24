@@ -18,6 +18,14 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
     turnInteger = 1;
 
 // Functions
+// Adds card to player
+function addCard(deckObject, playerObject) {
+  if (checkOpinion(deckObject, playerObject)) {
+    ;
+  } else {
+    ;
+  }
+}
 // Chooses random card index from the deck
 function chooseCard(deckObject) {
   return getRandomInteger(0, deckObject.length);
