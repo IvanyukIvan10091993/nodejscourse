@@ -97,6 +97,12 @@ function passTurnAll(playerObjectArray) {
     //passTurnOne(playerObjectArray[playerIndex]);
   }
 }
+// Passes turn for one player
+function passTurnOne(playerObject) {
+  if (playerObject.inGameBoolean) {
+    addCard(deckObject, playerObject);
+  }
+}
 // Removes card from the deck
 function removeCard(cardIndex, deckObject) {
   deckObject.length -= 1;
