@@ -13,7 +13,7 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
     deckObject,
     maxSumInteger = 21,
     playerObjectArray,
-    playersInGameInteger = 3,
+    playersInGameInteger = 4,
     turnInteger = 0;
 
 // Functions
@@ -22,9 +22,7 @@ function addCard(deckObject, playerObject) {
   if (checkOpinion(playerObject)) {
     var cardIndex = chooseCard(deckObject);
     if (!(playerObject.isComputerBoolean)) {
-      console.log(playerObject.nameString + ', you\'ve got');
-      logCard(cardIndex, deckObject);
-      console.log('');
+      rememberHumanCard(cardIndex, deckObject, playerObject);
     }
     changeHand(cardIndex, deckObject, playerObject);
     removeCard(cardIndex, deckObject);
@@ -61,7 +59,7 @@ function checkOpinionComputer(playerObject) {
 }
 // Checks if human should take a card
 function checkOpinionHuman(playerObject) {
-  var opinionBoolean = query(playerObject.nameString + ', do you want to take a card?');
+  var opinionBoolean = query(colors[playerObject.colorString](playerObject.nameString + ', do you want to take a card?'));
   return opinionBoolean;
 }
 // Chooses random card index from the deck
@@ -86,6 +84,24 @@ function createPlayer(colorString, isComputerBoolean, nameString) {
     playerObject.cardsNotInHandQuantityInteger = cardTotalQuantityInteger;
   }
   return playerObject;
+}
+// Finds winner
+function findWinnerIndex(playerObjectArray) {
+  var maxSum = 0,
+      winnerIndex;
+  for (var playerIndex = 0,
+           playerLength = playerObjectArray.length;
+       playerIndex < playerLength;
+       playerIndex++)
+  {
+    if (playerObjectArray[playerIndex].sumNumber > maxSum
+        &&
+        playerObjectArray[playerIndex].sumNumber <= maxSumInteger) {
+      maxSum = playerObjectArray[playerIndex].sumNumber;
+      winnerIndex = playerIndex;
+    }
+  }
+  return winnerIndex;
 }
 // Generates one card
 function generateCard(cardColorString,
@@ -130,10 +146,23 @@ function generateDeck(cardColorStringArray,
 function getRandomInteger(min, max) {
   return Math.floor((Math.random() * (max - min))) + min;
 }
-//
+function handleResult() {
+  ;
+}
+// Removes player from the game
 function ignorePlayer(playerObject) {
   playerObject.inGameBoolean = false;
   playersInGameInteger -= 1;
+}
+// Inits the game
+function initGame(deckObject, playerObjectArray) {
+  while (playersInGameInteger > 0) {
+    passTurnAll(playerObjectArray);
+  }
+  showSums(playerObjectArray);
+  var winnerIndex = findWinnerIndex(playerObjectArray);
+  showWinner(playerObjectArray[winnerIndex]);
+  handleResult(playerObjectArray);
 }
 // Logs card
 function logCard(cardIndex, deckObject) {
@@ -141,6 +170,8 @@ function logCard(cardIndex, deckObject) {
 }
 // Passes turn
 function passTurnAll(playerObjectArray) {
+  showTurn();
+  showHumanLastCards(playerObjectArray);
   showPlayerAll(playerObjectArray);
   for (var playerIndex = 0,
            playerLength = playerObjectArray.length;
@@ -157,16 +188,38 @@ function passTurnOne(playerObject) {
     addCard(deckObject, playerObject);
   }
 }
+// Remembers last card of human player
+function rememberHumanCard(cardIndex, deckObject, playerObject) {
+  playerObject.lastCardColorString = deckObject[cardIndex].cardColorString;
+  playerObject.lastCardNameString = deckObject[cardIndex].cardNameString;
+}
 // Removes card from the deck
 function removeCard(cardIndex, deckObject) {
   deckObject.length -= 1;
   deckObject[cardIndex] = deckObject[deckObject.length];
   delete deckObject[deckObject.length];
 }
+// Shows last card of one human player
+function showHumanLastCard(playerObject) {
+  if (playerObject.lastCardColorString) {
+    console.log(colors[playerObject.colorString](playerObject.nameString + ' got: ') + colors[playerObject.lastCardColorString](playerObject.lastCardNameString));
+  }
+}
+// Shows last cards of human players
+function showHumanLastCards(playerObjectArray) {
+  for (var playerIndex = 0,
+           playerLength = playerObjectArray.length;
+       playerIndex < playerLength;
+       playerIndex++)
+  {
+    if (!(playerObjectArray[playerIndex].isComputerBoolean)) {
+      showHumanLastCard(playerObjectArray[playerIndex]);
+    }
+  }
+  console.log('');
+}
 // Shows all players
 function showPlayerAll(playerObjectArray) {
-  clearLog();
-  console.log('Turn ' + turnInteger + '\n');
   for (var playerIndex = 0,
            playerLength = playerObjectArray.length;
        playerIndex < playerLength;
@@ -174,6 +227,7 @@ function showPlayerAll(playerObjectArray) {
   {
     showPlayerOne(playerIndex, playerObjectArray[playerIndex]);
   }
+  console.log('');
 }
 // Shows one player
 function showPlayerOne(playerIndex, playerObject) {
@@ -183,7 +237,32 @@ function showPlayerOne(playerIndex, playerObject) {
   if (!(playerObject.isComputerBoolean)) {
     console.log(colors[playerObject.colorString](('Sum on hand: ' + playerObject.sumNumber)));
   }
-  console.log('');
+}
+// Shows sum of one player
+function showSum(playerIndex, playerObject) {
+  console.log(colors[playerObject.colorString]('Player' + (playerIndex + 1) + ': ' + playerObject.sumNumber));
+}
+// Shows player sums
+function showSums(playerObjectArray) {
+  clearLog();
+  console.log('Players\' scores:');
+  for (var playerIndex = 0,
+           playerLength = playerObjectArray.length;
+       playerIndex < playerLength;
+       playerIndex++)
+  {
+    showSum(playerIndex, playerObjectArray[playerIndex]);
+  }
+  console.log();
+}
+// Shows the beginning of each turn
+function showTurn() {
+  clearLog();
+  console.log('Turn ' + turnInteger + '\n');
+}
+// Show winner
+function showWinner(playerObject) {
+  console.log('And the winner is ' + colors[playerObject.colorString](playerObject.nameString) + '!!!');
 }
 
 // Code
@@ -191,9 +270,8 @@ deckObject = generateDeck(cardColorStringArray,
                           cardSuitNameStringArray,
                           cardTypeNameStringArray,
                           cardValueIntegerArray);
-playerObjectArray = [createPlayer('white', false, 'Faceless Human'),
-                     createPlayer('blue', true, 'Computer1'),
-                     createPlayer('red', true, 'Computer2')];
-while (playersInGameInteger > 0) {
-  passTurnAll(playerObjectArray);
-}
+playerObjectArray = [createPlayer('green', false, 'Anonymous1'),
+                     createPlayer('white', true, 'Computer1'),
+                     createPlayer('blue', true, 'Computer2'),
+                     createPlayer('red', true, 'Computer3')];
+initGame(deckObject, playerObjectArray);
