@@ -14,7 +14,7 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
     maxSumInteger = 21,
     playerObjectArray,
     playersInGameInteger = 3,
-    turnInteger = 1;
+    turnInteger = 0;
 
 // Functions
 // Adds card to player
@@ -22,7 +22,7 @@ function addCard(deckObject, playerObject) {
   if (checkOpinion(playerObject)) {
     var cardIndex = chooseCard(deckObject);
     if (!(playerObject.isComputerBoolean)) {
-      console.log(playerObject.nameString + ', you got');
+      console.log(playerObject.nameString + ', you\'ve got');
       logCard(cardIndex, deckObject);
       console.log('');
     }
@@ -73,9 +73,10 @@ function clearLog() {
   return process.stdout.write('\033c');
 }
 // Creates player
-function createPlayer(isComputerBoolean, nameString) {
+function createPlayer(colorString, isComputerBoolean, nameString) {
   var playerObject = {};
   playerObject.cardQuantityInteger = 0;
+  playerObject.colorString = colorString;
   playerObject.nameString = nameString;
   playerObject.sumNumber = 0;
   playerObject.inGameBoolean = true;
@@ -148,6 +149,7 @@ function passTurnAll(playerObjectArray) {
   {
     passTurnOne(playerObjectArray[playerIndex]);
   }
+  turnInteger++;
 }
 // Passes turn for one player
 function passTurnOne(playerObject) {
@@ -175,11 +177,11 @@ function showPlayerAll(playerObjectArray) {
 }
 // Shows one player
 function showPlayerOne(playerIndex, playerObject) {
-  console.log('Player' + (playerIndex + 1) + ': ' + playerObject.nameString);
-  console.log('Cards on hand: ' + playerObject.cardQuantityInteger);
-  console.log('In game: ' + ((playerObject.inGameBoolean) ? 'Yes' : 'No'));
+  console.log(colors[playerObject.colorString]('Player' + (playerIndex + 1) + ': ' + playerObject.nameString));
+  console.log(colors[playerObject.colorString]('Cards on hand: ' + playerObject.cardQuantityInteger));
+  console.log(colors[playerObject.colorString]('In game: ' + ((playerObject.inGameBoolean) ? 'Yes' : 'No')));
   if (!(playerObject.isComputerBoolean)) {
-    console.log('Sum on hand: ' + playerObject.sumNumber);
+    console.log(colors[playerObject.colorString](('Sum on hand: ' + playerObject.sumNumber)));
   }
   console.log('');
 }
@@ -189,9 +191,9 @@ deckObject = generateDeck(cardColorStringArray,
                           cardSuitNameStringArray,
                           cardTypeNameStringArray,
                           cardValueIntegerArray);
-playerObjectArray = [createPlayer(false, 'Faceless Human'),
-                     createPlayer(true, 'Computer1'),
-                     createPlayer(true, 'Computer2')];
+playerObjectArray = [createPlayer('white', false, 'Faceless Human'),
+                     createPlayer('blue', true, 'Computer1'),
+                     createPlayer('red', true, 'Computer2')];
 while (playersInGameInteger > 0) {
   passTurnAll(playerObjectArray);
 }
