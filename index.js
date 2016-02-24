@@ -25,8 +25,26 @@ function addCard(deckObject, playerObject) {
       logCard(cardIndex, deckObject);
       console.log('');
     }
+    changeHand(cardIndex, deckObject, playerObject);
+    removeCard(cardIndex, deckObject);
+    checkLoseCondition(playerObject);
   } else {
     ;
+  }
+}
+// Changes player's hand
+function changeHand(cardIndex, deckObject, playerObject) {
+  playerObject.cardQuantityInteger += 1;
+  playerObject.sumNumber += deckObject[cardIndex].value;
+  if (isComputerBoolean) {
+    playerObject.cardNotInHandValueSumInteger -= deckObject[cardIndex].value;
+    playerObject.cardsNotInHandQuantityInteger -= 1;
+  }
+}
+// Checks if player has lost the game
+function checkLoseCondition(playerObject) {
+  if (playerObject.sumNumber > 21) {
+    playerObject.inGameBoolean = false;
   }
 }
 // Checks if card should be taken
@@ -165,6 +183,7 @@ deckObject = generateDeck(cardColorStringArray,
                           cardSuitNameStringArray,
                           cardTypeNameStringArray,
                           cardValueIntegerArray);
-playerObjectArray = [createPlayer(false, 'Human'),
-                     createPlayer(true, 'Computer')];
+playerObjectArray = [createPlayer(false, 'Faceless Human'),
+                     createPlayer(true, 'Computer1'),
+                     createPlayer(true, 'Computer2')];
 passTurnAll(playerObjectArray);
