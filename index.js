@@ -14,17 +14,33 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
     cardValueSumInteger = 380,
     cardValueIntegerArray = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11],
     deckObject,
+    maxSumInteger = 21,
     playerObjectArray,
     turnInteger = 1;
 
 // Functions
 // Adds card to player
 function addCard(deckObject, playerObject) {
-  if (checkOpinion(deckObject, playerObject)) {
+  if (checkOpinion(playerObject)) {
     ;
   } else {
     ;
   }
+}
+// Checks if card should be taken
+function checkOpinion(playerObject) {
+  return (playerObject.isComputerBoolean) ? checkOpinionComputer(playerObject) : checkOpinionHuman();
+}
+// Checks if computer should take a card
+function checkOpinionComputer(playerObject) {
+  var cardValueExpectationNumber = player.cardNotInHandValueSumInteger / playerObject.cardsNotInHandQuantityInteger;
+  if (playerObject.sumNumber + cardValueExpectationNumber > maxSumInteger) {
+    return true;
+  }
+}
+// Checks if human shoul take a card
+function checkOpinionHuman() {
+  ;
 }
 // Chooses random card index from the deck
 function chooseCard(deckObject) {
@@ -37,13 +53,14 @@ function clearLog() {
 // Creates player
 function createPlayer(isComputerBoolean, nameString) {
   var playerObject = {};
-  playerObject.cardsQuantityInteger = 0;
+  playerObject.cardQuantityInteger = 0;
   playerObject.nameString = nameString;
   playerObject.sumNumber = 0;
   playerObject.inGameBoolean = true;
   if (isComputerBoolean) {
     playerObject.isComputerBoolean = true;
-    playerObject.cardValueSumExpectationNumber = cardValueSumInteger;
+    playerObject.cardNotInHandValueSumInteger = cardValueSumInteger;
+    playerObject.cardsNotInHandQuantityInteger = cardTotalQuantityInteger;
   }
   return playerObject;
 }
@@ -132,7 +149,7 @@ function showPlayerAll(playerObjectArray) {
 // Shows one player
 function showPlayerOne(playerIndex, playerObject) {
   console.log('Player' + (playerIndex + 1) + ': ' + playerObject.nameString);
-  console.log('Cards on hand: ' + playerObject.cardsQuantityInteger);
+  console.log('Cards on hand: ' + playerObject.cardQuantityInteger);
   console.log('In game: ' + ((playerObject.inGameBoolean) ? 'Yes' : 'No'));
   if (!(playerObject.isComputerBoolean)) {
     console.log('Sum on hand: ' + playerObject.sumNumber);
