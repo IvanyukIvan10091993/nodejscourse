@@ -1,10 +1,7 @@
 // Libraries
 var colors = require('colors/safe'),
     readline = require('readline'),
-    rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+    query = require('cli-interact').getYesNo;
 
 // Variables
 var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
@@ -22,7 +19,12 @@ var cardColorStringArray = ['red', 'red', 'blue', 'blue'],
 // Adds card to player
 function addCard(deckObject, playerObject) {
   if (checkOpinion(playerObject)) {
-    ;
+    var cardIndex = chooseCard(deckObject);
+    if (!(playerObject.isComputerBoolean)) {
+      console.log(playerObject.nameString + ', you got');
+      logCard(cardIndex, deckObject);
+      console.log('');
+    }
   } else {
     ;
   }
@@ -33,18 +35,14 @@ function checkOpinion(playerObject) {
 }
 // Checks if computer should take a card
 function checkOpinionComputer(playerObject) {
-  var cardValueExpectationNumber = player.cardNotInHandValueSumInteger / playerObject.cardsNotInHandQuantityInteger;
+  var cardValueExpectationNumber = playerObject.cardNotInHandValueSumInteger / playerObject.cardsNotInHandQuantityInteger;
   if (playerObject.sumNumber + cardValueExpectationNumber < maxSumInteger) {
     return true;
   }
 }
 // Checks if human should take a card
 function checkOpinionHuman(playerObject) {
-  var opinionBoolean;
-  rl.question((playerObject.nameString + ', do you want to take a card?(y)\n'), function(input) {
-    (input === 'y') ? opinionBoolean = true : opinionBoolean = false;
-    rl.close();
-  });
+  var opinionBoolean = query(playerObject.nameString + ', do you want to take a card?');
   return opinionBoolean;
 }
 // Chooses random card index from the deck
@@ -124,7 +122,7 @@ function passTurnAll(playerObjectArray) {
        playerIndex < playerLength;
        playerIndex++)
   {
-    //passTurnOne(playerObjectArray[playerIndex]);
+    passTurnOne(playerObjectArray[playerIndex]);
   }
 }
 // Passes turn for one player
@@ -169,5 +167,4 @@ deckObject = generateDeck(cardColorStringArray,
                           cardValueIntegerArray);
 playerObjectArray = [createPlayer(false, 'Human'),
                      createPlayer(true, 'Computer')];
-//passTurnAll(playerObjectArray);
-checkOpinionHuman(playerObjectArray[0]);
+passTurnAll(playerObjectArray);
