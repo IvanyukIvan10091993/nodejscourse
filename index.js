@@ -29,7 +29,7 @@ function addCard(deckObject, playerObject) {
 }
 // Checks if card should be taken
 function checkOpinion(playerObject) {
-  return (playerObject.isComputerBoolean) ? checkOpinionComputer(playerObject) : checkOpinionHuman();
+  return (playerObject.isComputerBoolean) ? checkOpinionComputer(playerObject) : checkOpinionHuman(playerObject);
 }
 // Checks if computer should take a card
 function checkOpinionComputer(playerObject) {
@@ -38,9 +38,14 @@ function checkOpinionComputer(playerObject) {
     return true;
   }
 }
-// Checks if human shoul take a card
-function checkOpinionHuman() {
-  ;
+// Checks if human should take a card
+function checkOpinionHuman(playerObject) {
+  var opinionBoolean;
+  rl.question((playerObject.nameString + ', do you want to take a card?(y)\n'), function(input) {
+    (input === 'y') ? opinionBoolean = true : opinionBoolean = false;
+    rl.close();
+  });
+  return opinionBoolean;
 }
 // Chooses random card index from the deck
 function chooseCard(deckObject) {
@@ -164,4 +169,5 @@ deckObject = generateDeck(cardColorStringArray,
                           cardValueIntegerArray);
 playerObjectArray = [createPlayer(false, 'Human'),
                      createPlayer(true, 'Computer')];
-passTurnAll(playerObjectArray);
+//passTurnAll(playerObjectArray);
+checkOpinionHuman(playerObjectArray[0]);
