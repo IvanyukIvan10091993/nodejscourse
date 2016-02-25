@@ -86,6 +86,25 @@ function createPlayer(colorString, isComputerBoolean, nameString) {
   }
   return playerObject;
 }
+// Fills array with values from string
+function fillDataArray(dataArray, dataString) {
+  if (!dataString) {
+    return false;
+  }
+  for (var i = 0, length = dataString.length, temp; i < length; i++) {
+    if (dataString.charAt(i) === '\n') {
+      i++;
+      var j = i;
+      temp = '';
+      while (dataString.charAt(j) !== '\n') {
+        temp += dataString.charAt(j);
+        j++;
+      }
+      dataArray.push(temp);
+      i = j + 1;
+    }
+  }
+}
 // Finds winner
 function findWinnerIndex(playerObjectArray) {
   var maxSum = 0,
@@ -145,7 +164,22 @@ function generateDeck(cardColorStringArray,
 }
 // Gets data from log
 function getData(fileNameString) {
-  ;
+  var dataArray = false,
+      dataString;
+  if (fs.existsSync(fileNameString)) {
+    dataArray = [];
+    dataString = fs.readFileSync(fileNameString).toString();
+  }
+  fillDataArray(dataArray, dataString);
+  var dataObject = {};
+  dataObject.games = parseInt(dataArray[0] || 0);
+  dataObject.wins = parseInt(dataArray[1] || 0);
+  dataObject.losses = parseInt(dataArray[2] || 0);
+  dataObject.maxWinRow = parseInt(dataArray[3] || 0);
+  dataObject.maxLossRow = parseInt(dataArray[4] || 0);
+  dataObject.currentWinRow = parseInt(dataArray[5] || 0);
+  dataObject.currentLossRow = parseInt(dataArray[6] || 0);
+  return dataObject;
 }
 // Gets random number from interval (doesn't include right border)
 function getRandomInteger(min, max) {
@@ -194,6 +228,25 @@ function passTurnAll(playerObjectArray) {
 function passTurnOne(playerObject) {
   if (playerObject.inGameBoolean) {
     addCard(deckObject, playerObject);
+  }
+}
+// Processes win/lose data
+function processData(dataObject, playerObject) {
+  dataObject.games += 1;
+  if (playerObject.isComputerBoolean) {
+    dataObject.losses += 1;
+    dataObject.currentLossRow += 1;
+    if (dataObject.currentLossRow > dataObject.maxLossRow) {
+      dataObject.maxLossRow = dataObject.currentLossRow;
+    }
+    dataObject.currentWinRow = 0;
+  } else {
+    dataObject.wins += 1;
+    dataObject.currentWinRow += 1;
+    if (dataObject.currentWinRow > dataObject.maxWinRow) {
+      dataObject.maxWinRow = dataObject.currentWinRow;
+    }
+    dataObject.currentLossRow = 0;
   }
 }
 // Remembers last card of human player
@@ -246,6 +299,10 @@ function showPlayerOne(playerIndex, playerObject) {
     console.log(colors[playerObject.colorString](('Sum on hand: ' + playerObject.sumNumber)));
   }
 }
+// Shows stats from log
+function showStats(dataObject) {
+  console.log(dataObject);
+}
 // Shows sum of one player
 function showSum(playerIndex, playerObject) {
   console.log(colors[playerObject.colorString]('Player' + (playerIndex + 1) + ': ' + playerObject.sumNumber));
@@ -275,12 +332,13 @@ function showWinner(playerObject) {
 // Writes log
 function writeData(dataObject, fileNameString) {
   var dataString = 'Games\n' + dataObject.games +
-             '\nWins\n' + dataObject.wins +
-             '\nLoses\n' + dataObject.loses +
-             '\nMaxWinRow\n' + dataObject.maxWinRow +
-             '\nMaxLoseRow\n' + dataObject.maxLoseRow +
-             '\nCurrentWinRow\n' + dataObject.currentWinRow +
-             '\nCurrentLoseRow\n' + dataObject.currentLoseRow;
+                   '\nWins\n' + dataObject.wins +
+                   '\nlosses\n' + dataObject.losses +
+                   '\nMaxWinRow\n' + dataObject.maxWinRow +
+                   '\nMaxLossRow\n' + dataObject.maxLossRow +
+                   '\nCurrentWinRow\n' + dataObject.currentWinRow +
+                   '\nCurrentLossRow\n' + dataObject.currentLossRow +
+                   '\n';
   fs.writeFileSync(fileNameString, dataString);
 }
 
@@ -293,4 +351,4 @@ playerObjectArray = [createPlayer('green', false, 'Anonymous1'),
                      createPlayer('white', true, 'Computer1'),
                      createPlayer('blue', true, 'Computer2'),
                      createPlayer('red', true, 'Computer3')];
-//initGame(deckObject, playerObjectArray);
+initGame(deckObject, playerObjectArray);
