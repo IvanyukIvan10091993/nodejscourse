@@ -1,5 +1,6 @@
 // Libraries
 var colors = require('colors/safe'),
+    fs = require('fs'),
     readline = require('readline'),
     query = require('cli-interact').getYesNo;
 
@@ -142,12 +143,19 @@ function generateDeck(cardColorStringArray,
   deckObject.length = cardNumber;
   return deckObject;
 }
+// Gets data from log
+function getData(fileNameString) {
+  ;
+}
 // Gets random number from interval (doesn't include right border)
 function getRandomInteger(min, max) {
   return Math.floor((Math.random() * (max - min))) + min;
 }
-function handleResult() {
-  ;
+function handleResult(fileNameString, playerObject) {
+  var dataObject = getData(fileNameString);
+  processData(dataObject, playerObject);
+  writeData(dataObject, fileNameString);
+  showStats(dataObject);
 }
 // Removes player from the game
 function ignorePlayer(playerObject) {
@@ -162,7 +170,7 @@ function initGame(deckObject, playerObjectArray) {
   showSums(playerObjectArray);
   var winnerIndex = findWinnerIndex(playerObjectArray);
   showWinner(playerObjectArray[winnerIndex]);
-  handleResult(playerObjectArray);
+  handleResult('log.txt', playerObjectArray[winnerIndex]);
 }
 // Logs card
 function logCard(cardIndex, deckObject) {
@@ -264,6 +272,17 @@ function showTurn() {
 function showWinner(playerObject) {
   console.log('And the winner is ' + colors[playerObject.colorString](playerObject.nameString) + '!!!');
 }
+// Writes log
+function writeData(dataObject, fileNameString) {
+  var dataString = 'Games\n' + dataObject.games +
+             '\nWins\n' + dataObject.wins +
+             '\nLoses\n' + dataObject.loses +
+             '\nMaxWinRow\n' + dataObject.maxWinRow +
+             '\nMaxLoseRow\n' + dataObject.maxLoseRow +
+             '\nCurrentWinRow\n' + dataObject.currentWinRow +
+             '\nCurrentLoseRow\n' + dataObject.currentLoseRow;
+  fs.writeFileSync(fileNameString, dataString);
+}
 
 // Code
 deckObject = generateDeck(cardColorStringArray,
@@ -274,4 +293,4 @@ playerObjectArray = [createPlayer('green', false, 'Anonymous1'),
                      createPlayer('white', true, 'Computer1'),
                      createPlayer('blue', true, 'Computer2'),
                      createPlayer('red', true, 'Computer3')];
-initGame(deckObject, playerObjectArray);
+//initGame(deckObject, playerObjectArray);
