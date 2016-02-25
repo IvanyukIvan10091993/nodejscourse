@@ -310,6 +310,7 @@ function showStats(dataObject) {
   console.log('Current loss row: ' + dataObject.currentLossRow);
   console.log('Win rate: ' + (dataObject.wins / dataObject.games * 100 || 0).toFixed(1) + '%');
   console.log('Loss rate: ' + (dataObject.losses / dataObject.games * 100 || 0).toFixed(1) + '%');
+  console.log();
 }
 // Shows sum of one player
 function showSum(playerIndex, playerObject) {
