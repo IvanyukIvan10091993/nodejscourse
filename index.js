@@ -301,7 +301,15 @@ function showPlayerOne(playerIndex, playerObject) {
 }
 // Shows stats from log
 function showStats(dataObject) {
-  console.log(dataObject);
+  console.log('Games played: ' + dataObject.games);
+  console.log('Games won: ' + dataObject.wins);
+  console.log('Games lost: ' + dataObject.losses);
+  console.log('Longest win row: ' + dataObject.maxWinRow);
+  console.log('Longest loss row: ' + dataObject.maxLossRow);
+  console.log('Current win row: ' + dataObject.currentWinRow);
+  console.log('Current loss row: ' + dataObject.currentLossRow);
+  console.log('Win rate: ' + (dataObject.wins / dataObject.games * 100 || 0).toFixed(1) + '%');
+  console.log('Loss rate: ' + (dataObject.losses / dataObject.games * 100 || 0).toFixed(1) + '%');
 }
 // Shows sum of one player
 function showSum(playerIndex, playerObject) {
@@ -327,7 +335,7 @@ function showTurn() {
 }
 // Show winner
 function showWinner(playerObject) {
-  console.log('And the winner is ' + colors[playerObject.colorString](playerObject.nameString) + '!!!');
+  console.log('And the winner is ' + colors[playerObject.colorString](playerObject.nameString) + '!!!\n');
 }
 // Writes log
 function writeData(dataObject, fileNameString) {
