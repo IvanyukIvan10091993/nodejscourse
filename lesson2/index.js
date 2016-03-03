@@ -69,7 +69,7 @@ function chooseCard(deckObject) {
 }
 // A function to clear log
 function clearLog() {
-  return process.stdout.write('\033c');
+  process.stdout.write('\033c');
 }
 // Creates player
 function createPlayer(colorString, isComputerBoolean, nameString) {
