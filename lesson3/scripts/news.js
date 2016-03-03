@@ -16,6 +16,7 @@ News.prototype.addNew = function(newStr) {
 
 News.prototype.getNews = function(countInt) {
   var self = this; // Scope reference
+  console.log('Waiting response from server...');
   l.request(
     'http://edition.cnn.com/tech', // Request address
     function (error, response, html) {
@@ -26,6 +27,7 @@ News.prototype.getNews = function(countInt) {
             self.addNew($(this).text().trim()); // Adds new
           }
         );
+        s.util.clearLog();
         self.showNews(countInt);
       } else {
         console.log('error is: ', error);
