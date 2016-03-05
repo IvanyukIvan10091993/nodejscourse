@@ -13,10 +13,19 @@ var readline = require('readline'),
 function Menu(actionFunc, descriptionStr, headerStr, previousMenuObj) {
   var self = this;
   if (actionFunc) this.actionFunc = actionFunc;
-  this.bottomMenusHash.b.actionFunc = function() {self.previousMenuObj.actionFunc()};
   if (descriptionStr) this.descriptionStr = descriptionStr;
   if (headerStr) this.headerStr = headerStr;
   this.previousMenuObj = (previousMenuObj) ? previousMenuObj : this;
+  this.bottomMenusHash = {
+    b: {
+      actionFunc: function() {self.previousMenuObj.actionFunc()},
+      descriptionStr: 'Back to ' + self.previousMenuObj.headerStr
+    },
+    q: {
+      actionFunc: function() {rl.close();},
+      descriptionStr: 'Quit'
+    }
+  };
   console.log('previousMenuObj of ' + this.headerStr + ': ' + this.previousMenuObj.headerStr);
 }
 
@@ -61,20 +70,20 @@ Menu.prototype.showMenus = function() {
   for (var key in menusHash) {
     console.log(' [' + key + ']' + menusHash[key].descriptionStr);
   }
+  console.log();
   for (var key in bottomMenusHash) {
     console.log(' [' + key + ']' + bottomMenusHash[key].descriptionStr);
   }
 }
 
-Menu.prototype.bottomMenusHash = {
-  b: { // Default option back
-    descriptionStr: 'Back'
-  },
+/*Menu.prototype.bottomMenusHash = {
+  b: false,
   q: { // Default option quit
     actionFunc: function() {rl.close();},
     descriptionStr: 'Quit'
   }
 };
+*/
 
 // Exports /////////////////////////////////////////////////////////////
 
