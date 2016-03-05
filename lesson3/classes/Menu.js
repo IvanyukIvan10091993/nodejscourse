@@ -17,16 +17,15 @@ function Menu(actionFunc, descriptionStr, headerStr, previousMenuObj) {
   if (headerStr) this.headerStr = headerStr;
   this.previousMenuObj = (previousMenuObj) ? previousMenuObj : this;
   this.bottomMenusHash = {
-    b: {
+    b: { // Back option
       actionFunc: function() {self.previousMenuObj.actionFunc()},
       descriptionStr: 'Back to ' + self.previousMenuObj.headerStr
     },
-    q: {
-      actionFunc: function() {rl.close();},
+    q: { // Quit option
+      actionFunc: self.quitFunc,
       descriptionStr: 'Quit'
     }
   };
-  console.log('previousMenuObj of ' + this.headerStr + ': ' + this.previousMenuObj.headerStr);
 }
 
 // Menu prototype properties
@@ -76,14 +75,9 @@ Menu.prototype.showMenus = function() {
   }
 }
 
-/*Menu.prototype.bottomMenusHash = {
-  b: false,
-  q: { // Default option quit
-    actionFunc: function() {rl.close();},
-    descriptionStr: 'Quit'
-  }
-};
-*/
+Menu.prototype.quitFunc = function() {
+  rl.close();
+}
 
 // Exports /////////////////////////////////////////////////////////////
 
