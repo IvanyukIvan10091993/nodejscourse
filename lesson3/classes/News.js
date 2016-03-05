@@ -1,6 +1,6 @@
 // News constructor
 
-function News() {
+function News(parentInterfaceFunc) {
 }
 
 // News prototype properties
@@ -32,6 +32,18 @@ News.prototype.getNews = function(countInt) {
       } else {
         console.log('error is: ', error);
         console.log('statusCode is: ', statusCode);
+      }
+    }
+  );
+}
+
+News.prototype.interface = function() {
+  s.util.clearLog();
+  l.rl.question(
+    '',
+    function(input) {
+      switch(input) {
+        ;
       }
     }
   );
