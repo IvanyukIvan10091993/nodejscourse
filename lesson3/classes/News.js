@@ -53,6 +53,7 @@ News.prototype.getNews = function(countInt) {
 
 News.prototype.interface = function() {
   var self = this;
+  process.stdout.write('\033c'); // Clears console
   rl.i.question(
     'News amount: ',
     function(input) {
