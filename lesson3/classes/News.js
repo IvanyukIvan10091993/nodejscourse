@@ -23,7 +23,7 @@ News.prototype.addNew = function(newStr) {
 
 News.prototype.getNews = function(countInt) {
   var self = this; // Scope reference
-  console.log('Waiting response from server...');
+  console.log('Waiting for response from server...');
   request(
     'http://edition.cnn.com/tech', // Request address
     function (error, response, html) {

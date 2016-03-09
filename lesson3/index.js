@@ -1,7 +1,8 @@
 // Libraries ///////////////////////////////////////////////////////////
 
 var Menu = require('./classes/Menu.js'),
-    News = require('./classes/News.js');
+    News = require('./classes/News.js'),
+    Translator = require('./classes/Translator.js');
 
 // Code ////////////////////////////////////////////////////////////////
 
@@ -18,7 +19,15 @@ menu.fillMenus(
       'News',
       menu
     ),
-    2: new Menu(false, 'Translator', 'Translator', menu)
+    2: new Menu(
+      function() {
+        var t = new Translator(menu);
+        t.interface();
+      },
+      'Translator',
+      'Translator',
+      menu
+    )
   }
 );
 
