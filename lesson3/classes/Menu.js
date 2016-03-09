@@ -1,12 +1,6 @@
 // Libraries ///////////////////////////////////////////////////////////
 
-var readline = require('readline'),
-    rl = readline.createInterface(
-      {
-        input: process.stdin,
-        output: process.stdout
-      }
-    );
+var rl = require('./readline.js');
 
 // Menu constructor ////////////////////////////////////////////////////
 
@@ -42,7 +36,7 @@ Menu.prototype.actionFunc = function() {
   var self = this; // Scope reference
   self.clearLog();
   self.showMenus(self.menusHash);
-  rl.question(
+  rl.i.question(
     '\nChoose option: ',
     function(input) {
       if (input in self.bottomMenusHash) { // Input option exists in bottomMenusHash
@@ -78,7 +72,7 @@ Menu.prototype.showMenus = function() {
 }
 
 Menu.prototype.quitFunc = function() {
-  rl.close();
+  rl.i.close();
 }
 
 // Exports /////////////////////////////////////////////////////////////

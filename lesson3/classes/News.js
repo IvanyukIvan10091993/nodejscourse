@@ -1,6 +1,13 @@
+// Libraries
+
+var cheerio = require('cheerio'),
+    request = require('request'),
+    rl = require('./readline.js');
+
 // News constructor
 
-function News(parentInterfaceFunc) {
+function News(previousObj) {
+  this.previousObj = previousObj;
 }
 
 // News prototype properties
@@ -17,33 +24,43 @@ News.prototype.addNew = function(newStr) {
 News.prototype.getNews = function(countInt) {
   var self = this; // Scope reference
   console.log('Waiting response from server...');
-  l.request(
+  request(
     'http://edition.cnn.com/tech', // Request address
     function (error, response, html) {
       if (!error && response.statusCode === 200) { // Page loaded
-        var $ = l.cheerio.load(html);
+        var $ = cheerio.load(html);
         $('.cd__headline-text').each(
           function(i, element) {
+            console.log(i);
             self.addNew($(this).text().trim()); // Adds new
           }
         );
-        s.util.clearLog();
+        process.stdout.write('\033c'); // Clears log
         self.showNews(countInt);
+        rl.i.question(
+          'Press any button to return: ',
+          function() {
+            self.previousObj.actionFunc();
+          }
+        );
       } else {
-        console.log('error is: ', error);
-        console.log('statusCode is: ', statusCode);
+        console.log('Error is: ', error);
+        console.log('Status code is: ', statusCode);
       }
     }
   );
 }
 
 News.prototype.interface = function() {
-  s.util.clearLog();
-  l.rl.question(
-    '',
+  var self = this;
+  rl.i.question(
+    'News amount: ',
     function(input) {
-      switch(input) {
-        ;
+      var inputInt = parseInt(input);
+      if (isNaN(inputInt)) {
+        console.log('Not a number!');
+      } else {
+        self.getNews(inputInt);
       }
     }
   );
