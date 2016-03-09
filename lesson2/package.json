@@ -1,15 +1,14 @@
 {
-  "name": "nodejscourse",
+  "name": "lesson2",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Ivan",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "ansi": "~0.3.1",
     "colors": "~1.1.2",
     "cli-interact": "~0.1.9"
   }

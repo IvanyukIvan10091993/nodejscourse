@@ -18,7 +18,7 @@ function Menu(actionFunc, descriptionStr, headerStr, previousMenuObj) {
   this.previousMenuObj = (previousMenuObj) ? previousMenuObj : this;
   this.bottomMenusHash = {
     b: { // Back option
-      actionFunc: function() {self.previousMenuObj.actionFunc()},
+      actionFunc: function() {self.previousMenuObj.actionFunc();},
       descriptionStr: 'Back to ' + self.previousMenuObj.headerStr
     },
     q: { // Quit option
@@ -33,6 +33,8 @@ function Menu(actionFunc, descriptionStr, headerStr, previousMenuObj) {
 Menu.prototype.descriptionStr = 'Description';
 
 Menu.prototype.headerStr = 'Header';
+
+Menu.prototype.menusHash = {};
 
 // Menu prototype methods
 
