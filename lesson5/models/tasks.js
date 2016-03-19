@@ -53,7 +53,7 @@ var tasks = {
       });
       connection.release(); // releases connection
     });
-  },
+  }
 }
 
 // Exports
