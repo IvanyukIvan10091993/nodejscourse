@@ -41,10 +41,6 @@ var tasks = {
     });
   },
   
-  complete: function(callback) {
-    ;
-  },
-  
   'delete': function(id, callback) {
     connectionPool.getConnection(function (err, connection) { // gets connection
       if (err) console.error(err); // checks and logs errors
