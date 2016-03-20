@@ -1,6 +1,6 @@
 // Modules
 
-var db = require(__dirname + '/../config/db.js').db,
+var db = require('../config/db.js').db,
     mysql = require('mysql');
     
 // Variables
